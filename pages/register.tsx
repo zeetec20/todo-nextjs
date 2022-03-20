@@ -1,6 +1,7 @@
 import { Box, Button, Checkbox, Flex, FormControl, FormLabel, Heading, Input, Stack, useColorModeValue, Link as LinkChakra, Text, Center, toast, useToast } from "@chakra-ui/react";
 import { setCookies } from "cookies-next";
 import { NextPage } from "next";
+import Link from "next/link";
 import { NextRouter, useRouter } from "next/router";
 import { FormEvent } from "react";
 import color from '../component/color'
@@ -8,7 +9,7 @@ import Navbar from '../component/navbar'
 import AuthService from '../service/auth'
 
 const Register: NextPage = (props: any) => {
-    const size: {width: undefined | number, height: undefined | number} = props.size
+    const size: { width: undefined | number, height: undefined | number } = props.size
     const router = useRouter()
     const toast = useToast({
         isClosable: true,
@@ -26,12 +27,37 @@ const Register: NextPage = (props: any) => {
                 description: 'You successfully create user'
             })
             return router.push('/login')
-        } 
+        }
         return toast({
             status: 'error',
             title: 'Sign Up',
             description: `Failed sign up (${result.message})`
         })
+    }
+
+    let width_sign_up = '24vw'
+    if (typeof size.width == 'number') {
+        if (size.width < 1750) {
+            width_sign_up = '27vw'
+        }
+        if (size.width < 1580) {
+            width_sign_up = '30vw'
+        }
+        if (size.width < 1400) {
+            width_sign_up = '35vw'
+        }
+        if (size.width < 1150) {
+            width_sign_up = '40vw'
+        }
+        if (size.width < 990) {
+            width_sign_up = '50vw'
+        }
+        if (size.width < 770) {
+            width_sign_up = '65vw'
+        }
+        if (size.width < 560) {
+            width_sign_up = '85vw'
+        }
     }
 
     return (
@@ -42,7 +68,7 @@ const Register: NextPage = (props: any) => {
                 align={'center'}
                 justify={'center'}
                 bg={useColorModeValue('gray.50', 'gray.800')}>
-                <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6} minWidth={'24vw'}>
+                <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6} minWidth={width_sign_up}>
                     <Stack align={'center'}>
                         <Heading fontSize={'4xl'}>Sign Up</Heading>
                         <Text fontSize={'lg'} color={'gray.600'}>
@@ -81,6 +107,9 @@ const Register: NextPage = (props: any) => {
                                         Sign Up
                                     </Button>
                                 </Stack>
+                                <Text>
+                                    If you already have account, <Link href='/login' passHref><Text as={'span'} fontWeight='bold' cursor={'pointer'} color='blue.400'>login</Text></Link>
+                                </Text>
                             </Stack>
                         </form>
                     </Box>
