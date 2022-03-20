@@ -96,7 +96,7 @@ const ButtonAuth = ({ auth, size }: { auth: boolean, size: {width: undefined | n
     const router = useRouter()
     if (auth) return (
         <Button
-            size={(typeof size.width == 'number') ? size.width < 670 ? 'sm' : '' : ''}
+            size={(typeof size.width == 'number') ? size.width < 670 ? 'sm' : 'md' : 'md'}
             onClick={() => logout(router)}
             fontSize={'sm'}
             fontWeight={600}

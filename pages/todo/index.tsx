@@ -31,6 +31,7 @@ import AuthService from "../../service/auth";
 import TodoCom from '../../component/todo'
 import ChakraTagInput from '../../component/ChakraTagInput'
 import TodoService, { Todo as TypeTodo } from "../../service/todo";
+import { getCookie } from "cookies-next";
 
 const Todo: NextPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const [listTodo, setListTodo] = useState<TypeTodo[]>(props.todo.todo)
@@ -53,7 +54,7 @@ const Todo: NextPage = (props: InferGetServerSidePropsType<typeof getServerSideP
 
     const updateListTodo = async () => {
         const resultTodo = await TodoService.getAll()
-        const list = separatedTodo(resultTodo!.todo as TypeTodo[])
+        const list = separatedTodo(resultTodo!.todo as TypeTodo[] ?? [])
         setListTodo(list.todo)
         setListDoing(list.doing)
         setListDone(list.done)
@@ -100,7 +101,7 @@ const Todo: NextPage = (props: InferGetServerSidePropsType<typeof getServerSideP
                     <List width={width_list_todo}>
                         <ListItem>
                             <Heading marginTop={'16'}>
-                                Hi Firman don&apos;t forget to clear all you task 😊
+                                Hi {props.profile.name} don&apos;t forget to clear all you task 😊
                             </Heading>
                             <Text fontSize={20} fontWeight={'bold'} marginTop={3}>
                                 Or any new task ? <Button size={'sm'} marginLeft={3} textColor={color.color1} outlineColor={color.color1} onClick={onOpenCreate}>New Todo</Button>
@@ -235,13 +236,15 @@ export default Todo
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const auth = await AuthService.isAuthenticated(context.req, context.res)
     const todo = await TodoService.getAll(context.req, context.res)
+    const profile = JSON.parse(getCookie('user', {req: context.req, res: context.res})!.toString())
 
     return {
         props: {
             auth,
             todo: {
-                ...separatedTodo(todo!.todo as TypeTodo[])
-            }
+                ...separatedTodo(todo!.todo as TypeTodo[] ?? [])
+            },
+            profile
         }
     }
 }

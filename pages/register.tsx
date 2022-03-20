@@ -3,7 +3,7 @@ import { setCookies } from "cookies-next";
 import { NextPage } from "next";
 import Link from "next/link";
 import { NextRouter, useRouter } from "next/router";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import color from '../component/color'
 import Navbar from '../component/navbar'
 import AuthService from '../service/auth'
@@ -15,11 +15,14 @@ const Register: NextPage = (props: any) => {
         isClosable: true,
         position: 'top-right'
     })
+    const [loadingSignUp, setLoadingSignUp] = useState(false)
 
     const submit = async (event: FormEvent<HTMLFormElement>, router: NextRouter) => {
         event.preventDefault()
+        setLoadingSignUp(true)
         const formData = new FormData(event.currentTarget)
         const result = await AuthService.register(formData.get('name')!.toString(), formData.get('email')!.toString(), formData.get('password')!.toString())
+        setLoadingSignUp(false)
         if (result.succces) {
             setCookies('toast_alert', {
                 status: 'success',
@@ -97,6 +100,7 @@ const Register: NextPage = (props: any) => {
                                 </FormControl>
                                 <Stack spacing={10}>
                                     <Button
+                                        isLoading={loadingSignUp}
                                         type={'submit'}
                                         marginTop={'5'}
                                         bgColor={color.color1}
