@@ -70,9 +70,11 @@ const TodoSpecific = (props: InferGetServerSidePropsType<typeof getServerSidePro
                                 <Badge fontSize={'sm'} colorScheme={badgeColor} rounded={'md'} marginRight={3}>{badgeText}</Badge>
                                 <Text display={'inline'} fontSize={13} fontWeight={'semibold'}>{moment(todo.createdAt).format('lll')}</Text>
                             </Box>
+                            <Box marginTop={3}>
+                            {todo.tag != null ? todo.tag.split(',').map((value, key) => <Badge key={key} marginRight={2} rounded={'md'}>{value}</Badge>) : ''}
+                            </Box>
                             <Box marginTop={6} padding={4} border={'1px'} borderColor='gray.200' rounded={'md'}>
-                                <Text size={'md'} fontWeight={'bold'}>
-                                    {todo.description}
+                                <Text size={'md'} dangerouslySetInnerHTML={{__html: todo.description.replace(/(?:\r\n|\r|\n)/g, '<br />')}}>
                                 </Text>
                             </Box>
                             <Divider marginTop={4}/>
