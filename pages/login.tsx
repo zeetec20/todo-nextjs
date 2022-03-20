@@ -7,6 +7,7 @@ import color from '../component/color'
 import AuthService from "../service/auth";
 import Navbar from '../component/navbar'
 import { getCookie, removeCookies } from "cookies-next";
+import Link from "next/link";
 
 const Login: NextPage = (props: any) => {
     const size: {width: undefined | number, height: undefined | number} = props.size
@@ -16,6 +17,31 @@ const Login: NextPage = (props: any) => {
         isClosable: true
     })
     const [loadingSignIn, setLoadingSignIn] = useState(false)
+
+    let width_sign_in = '24vw'
+    if (typeof size.width == 'number') {
+        if (size.width < 1750) {
+            width_sign_in = '27vw'
+        }
+        if (size.width < 1580) {
+            width_sign_in = '30vw'
+        }
+        if (size.width < 1400) {
+            width_sign_in = '35vw'
+        }
+        if (size.width < 1150) {
+            width_sign_in = '40vw'
+        }
+        if (size.width < 990) {
+            width_sign_in = '50vw'
+        }
+        if (size.width < 770) {
+            width_sign_in = '65vw'
+        }
+        if (size.width < 560) {
+            width_sign_in = '85vw'
+        }
+    }
 
     const submit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -60,7 +86,7 @@ const Login: NextPage = (props: any) => {
                 align={'center'}
                 justify={'center'}
                 bg={'gray.50'}>
-                <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6} width={'24vw'}>
+                <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6} width={width_sign_in}>
                     <Stack align={'center'}>
                         <Heading fontSize={'4xl'}>Sign In</Heading>
                         <Text fontSize={'lg'} color={'gray.600'}>
@@ -96,6 +122,9 @@ const Login: NextPage = (props: any) => {
                                         Sign In
                                     </Button>
                                 </Stack>
+                                <Text>
+                                    If you dont&apos;t have account, <Link href='/register' passHref><Text as={'span'} fontWeight='bold' cursor={'pointer'} color='blue.400'>register</Text></Link> 
+                                </Text>
                             </Stack>
                         </form>
                     </Box>
