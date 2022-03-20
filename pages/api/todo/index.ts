@@ -49,6 +49,7 @@ const add = async (req: NextApiRequest, res: NextApiResponse) => {
     if (validate.error) return res.status(400).json({
         'error': 'Body invalid'
     })
+    console.log(body)
     const token = req.headers.authorization!.replace('Bearer ', '')
     const result = AuthService.decodeToken(token)!
     const user = await User.findOne({

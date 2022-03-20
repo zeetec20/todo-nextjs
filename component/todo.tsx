@@ -31,16 +31,17 @@ const Todo = ({ todo, updateListTodo, size}: { todo: TypeTodo, updateListTodo: {
         <Link href={`/todo/${todo.slug}`} passHref>
             <Box boxShadow={'lg'} padding={5} rounded={'lg'} cursor='pointer'>
                 <Flex>
-                    <Box>
+                    <Box marginTop={2}>
                         <Heading size={'sm'}>
                             {todo.title}
                         </Heading>
-                        <Text marginTop={3.5} fontSize={14} >
-                            {todo.description}
-                        </Text>
+                        {todo.tag != null ? todo.tag.split(',').map((value, key) => <Badge key={key} marginRight={2} marginTop={1} rounded={'md'}>{value}</Badge>) : ''}
                     </Box>
                     <Spacer />
                     <Options todo={{ ...todo }} updateListTodo={updateListTodo} />
+                </Flex>
+                <Flex>
+                    <Text marginTop={todo.tag != null ? 2.5 : 0} fontSize={14} dangerouslySetInnerHTML={{__html: todo.description.replace(/(?:\r\n|\r|\n)/g, '<br />')}} />
                 </Flex>
 
                 <Flex marginTop={5} width={'100%'}>

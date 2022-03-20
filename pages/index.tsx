@@ -1,7 +1,5 @@
 import { Box, Button, Container, Flex, Heading, Icon, Stack, Text, useColorModeValue } from '@chakra-ui/react'
 import type { GetServerSideProps, GetStaticProps, InferGetServerSidePropsType, InferGetStaticPropsType, NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
 import Navbar from '../component/navbar'
 import Link from 'next/link'
 import color from '../component/color'

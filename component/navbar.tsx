@@ -79,7 +79,7 @@ export default function Navigation({ auth, size}: { auth: boolean, size: {width:
                         justify={'flex-end'}
                         direction={'row'}
                         spacing={6}>
-                        <ButtonAuth auth={auth} />
+                        <ButtonAuth auth={auth} size={size} />
                     </Stack>
                 </Flex>
                 <Spacer/>
@@ -92,10 +92,11 @@ export default function Navigation({ auth, size}: { auth: boolean, size: {width:
     );
 }
 
-const ButtonAuth = ({ auth }: { auth: boolean }) => {
+const ButtonAuth = ({ auth, size }: { auth: boolean, size: {width: undefined | number, height: undefined | number}}) => {
     const router = useRouter()
     if (auth) return (
         <Button
+            size={(typeof size.width == 'number') ? size.width < 670 ? 'sm' : 'md' : 'md'}
             onClick={() => logout(router)}
             fontSize={'sm'}
             fontWeight={600}
