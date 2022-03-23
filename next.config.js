@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   env: {
     auth: true,
-    DOMAIN: 'http://127.0.0.1:3000'
+    DOMAIN: 'http://localhost:3000'
   }
 }
 
