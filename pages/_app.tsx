@@ -4,7 +4,6 @@ import { ChakraProvider } from '@chakra-ui/react'
 import Layout from '../component/layout'
 import { GetStaticProps } from 'next'
 import AuthService from '../service/auth'
-import { CookiesProvider } from 'react-cookie'
 import App from 'next/app'
 import { useEffect, useState } from 'react'
 
@@ -12,13 +11,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   const size = useWindowSize()
   pageProps.size = size
   return (
-    <CookiesProvider>
-      <ChakraProvider>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ChakraProvider>
-    </CookiesProvider>
+    <ChakraProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </ChakraProvider>
   )
 }
 
